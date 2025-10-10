@@ -28,7 +28,5 @@ img_size = (480, 640)  # (H, W)
 
 vg.plot_camera_fov(ax, K, np.eye(4), (480, 640), scale=0.1)
 vg.plot_axes(ax, np.eye(4), scale=0.05, name="another name")
-
-
 vg.set_axes_equal(ax)
 plt.show()
