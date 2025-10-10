@@ -4,7 +4,6 @@ import numpy as np
 from mpl_toolkits.mplot3d.art3d import Line3DCollection, Poly3DCollection
 from mpl_toolkits.mplot3d.axes3d import Axes3D
 
-from .axes import plot_axes
 from .helpers import plot_text
 
 
@@ -17,10 +16,8 @@ def plot_plane(
     edgecolor: str = "k",
     alpha: float = 0.25,
     linewidth: float = 0.5,
-    draw_axes: bool = True,
     scale: float = 0.05,
     draw_normal: bool = True,
-    normal_len: float = 0.3,
     name: str | None = None,
 ) -> np.ndarray:
     """
@@ -45,10 +42,8 @@ def plot_plane(
         Plane transparency.
     linewidth : float
         Edge line width.
-    draw_axes : bool
-        Draw the local plane axes at the origin.
     scale : float
-        Length of the drawn local axes or normal arrows.
+        Length of the drawn normal.
     draw_normal : bool
         Draw the plane normal (+z in local) from the origin.
     name: str
@@ -92,12 +87,9 @@ def plot_plane(
     edges = [[corners_w[i], corners_w[(i + 1) % 4]] for i in range(4)]
     ax.add_collection3d(Line3DCollection(edges, colors=edgecolor, linewidths=linewidth))
 
-    # Draw local axes at the plane origin
-    if draw_axes:
-        plot_axes(ax, rt, scale)
-    elif draw_normal:
+    if draw_normal:
         n = R[:, 2]
-        ax.quiver(*t, *n * normal_len, color="b")
+        ax.quiver(*t, *n * scale, color="b")
 
     plot_text(ax, t * 1.05, name)
 

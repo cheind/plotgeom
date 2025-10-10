@@ -81,6 +81,17 @@ def translate(xyz: np.ndarray):
     return T
 
 
+def random_pose():
+    r = np.random.rand(6) * 2 - 1.0
+
+    return (
+        translate(r[3:] * 0.1)
+        @ rotate_z(r[2] * np.pi / 2)
+        @ rotate_y(r[1] * np.pi / 2)
+        @ rotate_x(r[0] * np.pi / 2)
+    )
+
+
 def fov_from_K(K: np.ndarray, shape: tuple[int, int]):
     """Extract field of view from intrinsics and image shape"""
     h, w = shape
@@ -98,4 +109,5 @@ __all__ = [
     "rotate_z",
     "translate",
     "plot_text",
+    "random_pose",
 ]

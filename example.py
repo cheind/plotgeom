@@ -1,17 +1,3 @@
-# plotgeom
-A lightweight Python library for visualizing camera poses, fields of view, coordinate axes, and geometric primitives in 3D using Matplotlib.
-
-![](etc/example.png)
-
-
-## Installation
-```
-pip install git+https://github.com/cheind/plotgeom.git
-```
-
-## Usage
-
-```python
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -51,5 +37,3 @@ pg.set_axes_equal(ax)
 
 # Show
 plt.show()
-```
-
