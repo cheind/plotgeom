@@ -4,7 +4,7 @@ import numpy as np
 from mpl_toolkits.mplot3d.art3d import Line3DCollection, Poly3DCollection
 from mpl_toolkits.mplot3d.axes3d import Axes3D
 
-from .helpers import plot_text
+from .texts import plot_text
 
 
 def plot_plane(
@@ -21,7 +21,7 @@ def plot_plane(
     name: str | None = None,
 ) -> np.ndarray:
     """
-    Plot a rectangular plane z=0 in its *local* frame, placed in the world by (R_wc, t_wc).
+    Plot a rectangular plane z=0 in its *local* frame, placed in the world by `rt`.
 
     Local frame convention:
       - Plane lies on local z=0
@@ -91,7 +91,7 @@ def plot_plane(
         n = R[:, 2]
         ax.quiver(*t, *n * scale, color="b")
 
-    plot_text(ax, t * 1.05, name)
+    plot_text(ax, t, name)
 
     return corners_w
 

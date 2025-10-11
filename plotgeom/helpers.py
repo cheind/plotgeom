@@ -34,11 +34,6 @@ def set_axes_equal(ax: Axes3D):
     ax.set_zlim3d([z_middle - plot_radius, z_middle + plot_radius])
 
 
-def plot_text(ax: Axes3D, pos: np.ndarray, txt: str | None):
-    if txt is not None:
-        ax.text(*pos, txt, fontsize=10)
-
-
 def rotate_x(rx: float):
     R = np.array(
         [
@@ -92,22 +87,56 @@ def random_pose():
     )
 
 
-def fov_from_K(K: np.ndarray, shape: tuple[int, int]):
-    """Extract field of view from intrinsics and image shape"""
-    h, w = shape
-    fx, fy = K[0, 0], K[1, 1]
-    hfov = 2 * np.arctan(w / (2 * fx))
-    vfov = 2 * np.arctan(h / (2 * fy))
-    return hfov, vfov
+def generate_chessboard_image(
+    board_size=(8, 8), square_size=50, colors=((1.0, 1.0, 1.0), (0.0, 0.0, 0.0))
+):
+    cols, rows = board_size
+
+    # Create alternating 0/1 pattern using broadcasting
+    pattern = np.add.outer(np.arange(rows), np.arange(cols)) % 2
+    pattern = np.kron(pattern, np.ones((square_size, square_size)))
+
+    # Map to colors
+    c0, c1 = np.array(colors[0]), np.array(colors[1])
+    img = np.where(pattern[..., None] == 1, c0, c1)
+
+    return img
+
+
+def style_ax(ax):
+    """Apply a clean, modern 3D style."""
+    ax.set_facecolor((1, 1, 1))  # white background
+    ax.xaxis.pane.set_visible(False)
+    ax.yaxis.pane.set_visible(False)
+    ax.zaxis.pane.set_visible(False)
+
+    # Remove gridlines
+    ax.grid(True)
+
+    # Subtle spines
+    ax.xaxis.line.set_color((0.7, 0.7, 0.7, 0.5))
+    ax.yaxis.line.set_color((0.7, 0.7, 0.7, 0.5))
+    ax.zaxis.line.set_color((0.7, 0.7, 0.7, 0.5))
+
+    # Axis labels
+    ax.set_xlabel("X", labelpad=8)
+    ax.set_ylabel("Y", labelpad=8)
+    ax.set_zlabel("Z", labelpad=8)
+
+    # Light gray ticks
+    ax.tick_params(colors=(0.4, 0.4, 0.4))
+
+    return ax
 
 
 __all__ = [
     "make_ax",
+    "style_ax",
     "set_axes_equal",
     "rotate_x",
     "rotate_y",
     "rotate_z",
     "translate",
-    "plot_text",
     "random_pose",
+    "generate_chessboard_image",
 ]
