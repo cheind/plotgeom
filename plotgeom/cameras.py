@@ -94,9 +94,9 @@ def plot_camera_fov(
 def plot_camera_image(
     ax: Axes3D,
     rt: np.ndarray,
-    image: np.ndarray,
     hfov: float,
     vfov: float,
+    image: np.ndarray,
     *,
     scale: float = 0.05,
     origin: str = "upper",

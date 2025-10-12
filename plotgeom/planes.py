@@ -9,15 +9,15 @@ from .texts import plot_text
 
 def plot_plane(
     ax: Axes3D,
-    rt: np.ndarray,  # 4x4 local plane frame -> world
-    extent_xy: Tuple[float, float],  # (size_x, size_y) in plane-local units
+    rt: np.ndarray,
+    extent_xy: Tuple[float, float],
     *,
     facecolor: str = "C0",
     edgecolor: str = "k",
     alpha: float = 0.25,
     linewidth: float = 0.5,
-    scale: float = 0.05,
     draw_normal: bool = True,
+    normal_scale: float = 0.05,
     name: str | None = None,
 ) -> np.ndarray:
     """
@@ -42,17 +42,12 @@ def plot_plane(
         Plane transparency.
     linewidth : float
         Edge line width.
-    scale : float
-        Length of the drawn normal.
     draw_normal : bool
         Draw the plane normal (+z in local) from the origin.
+    normal_scale : float
+        Length of the drawn normal.
     name: str
         Name to attach to plane
-
-    Returns
-    -------
-    corners_w : (4,3) ndarray
-        World-space coordinates of the rectangle corners in CCW order.
     """
     sx, sy = extent_xy
     hx, hy = sx * 0.5, sy * 0.5
@@ -89,11 +84,9 @@ def plot_plane(
 
     if draw_normal:
         n = R[:, 2]
-        ax.quiver(*t, *n * scale, color="b")
+        ax.quiver(*t, *n * normal_scale, color="b", arrow_length_ratio=0.25)
 
     plot_text(ax, t, name)
-
-    return corners_w
 
 
 __all__ = ["plot_plane"]

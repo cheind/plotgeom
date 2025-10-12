@@ -9,6 +9,7 @@ def plot_text(
     offset_dir=(0, 0, 1),
     offset_scale=0.01,
 ):
+    """Plot text anchored at `pos` oriented towards the viewer."""
     if txt is None:
         return
     pos = np.array(pos)
