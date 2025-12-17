@@ -22,7 +22,7 @@ def plot_axes(
 
     # Plot name at origin
     if name is not None:
-        plot_text(ax, t, name)
+        plot_text(ax, t, name, offset_dir=(0, 0, -1), offset_scale=0.02)
 
     # Plot axis labels near tips
     if axis_labels is not None:
