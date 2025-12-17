@@ -15,10 +15,7 @@ ax = pg.make_ax(fig=fig, proj="persp")
 
 # Plot world axes
 pg.plot_axes(
-    ax=ax,
-    rt=np.eye(4),
-    scale=0.05,
-    name="world",
+    ax=ax, rt=np.eye(4), scale=0.05, name="world", axis_labels=["+x", "+y", "+z"]
 )
 
 # Plot a plane with limits
